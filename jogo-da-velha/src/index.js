@@ -5,27 +5,53 @@ import './index.css'
 //------------------------------------------------------------
 //referente a cada celular do tabuleiro
 
-class Square extends React.Component {
-    render(){
-        return(
-            <button className="square">
-                {/* a fazer */}
-            </button>
-        )
-    }
+function Square(props) {
+    return(
+        <button 
+        className="square"
+        onClick={props.onClick}
+        >
+            {props.value}
+        </button>
+    )
 }
 
 //------------------------------------------------------------
 //refetrente ao tabuleiro com todas as celulas dentro
 
 class Board extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            squares : Array(9).fill(null), // [null, null ... 9x ]
+            xIsNext: true
+        }
+    }
+
+    //atualiza o estado do componente 
+    handleClick(i) {
+        const squares = [... this.state.squares]
+
+        //inicializa o primeiro jogado com 'x' e atualiza o estado
+        squares[i] = this.state.xIsNext? 'X' : 'O'
+        this.setState({
+            squares: squares,
+            xIsNext: !this.state.xIsNext
+        })
+    }
+
     //função chama o componete Square - linha 5
     renderSquare(i){
-        return <Square />
+        return (
+            <Square 
+              value= {this.state.squares[i]}
+              onClick= {()=> this.handleClick(i)}
+            />
+        )
     }
 
     render() {
-        const status = 'Proximo Jogador: X'
+        const status = 'Proximo Jogador: ' + (this.state.xIsNext? 'X' : 'O')
 
         return(
             <div>
@@ -39,14 +65,14 @@ class Board extends React.Component {
                     {this.renderSquare(2)}
                 </div>
                 <div className="board-row">
-                    {this.renderSquare(2)}
+                    {this.renderSquare(3)}
                     {this.renderSquare(4)}
                     {this.renderSquare(5)}
                 </div>
                 <div className="board-row">
                     {this.renderSquare(6)}
                     {this.renderSquare(7)}
-                    {this.renderSquare(7)}
+                    {this.renderSquare(8)}
                 </div>
 
             </div>
