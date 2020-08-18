@@ -32,9 +32,14 @@ ol, ul {
     width: 34px;
 }
 
-
+.square,
 .square:focus {
     outline: none;
+    cursor: pointer;
+}
+
+.square:hover {
+    background-color: rgb(196, 255, 255);
 }
 
 .kbd-navigation .square:focus {
